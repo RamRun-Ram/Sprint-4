@@ -1,5 +1,6 @@
 import mu.KLogging
 
+
 class ClientService {
 
     fun saveClient(client: Client): Client = client
@@ -11,7 +12,10 @@ class ClientService {
     private fun validateClient(client: Client) {
         val errorList = ArrayList<ErrorCode>()
         errorList.addAll(PhoneValidator().validate(client.phone))
-        // ...
+        errorList.addAll(FirstLastNameValidator().validate(client.firstName))
+        errorList.addAll(FirstLastNameValidator().validate(client.lastName))
+        errorList.addAll(EmailValidator().validate(client.email))
+        errorList.addAll(SNILSValidator().validate(client.snils))
         if (errorList.isNotEmpty()) {
             throw ValidationException(*errorList.toTypedArray())
         }
