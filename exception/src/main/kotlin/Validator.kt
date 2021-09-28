@@ -6,7 +6,7 @@ class PhoneValidator : Validator<String>() {
     override fun validate(value: String?): List<ErrorCode> {
         val errorList = arrayListOf<ErrorCode>()
         //Проверяем поле на null
-        if (value != null) {
+        if (!value.isNullOrEmpty()) {
             //Проверяем поле на допустимые значения
             for (i in value) {
                 if (i !in '0'..'9')
@@ -29,7 +29,7 @@ class FirstLastNameValidator : Validator<String>() {
     override fun validate(value: String?): List<ErrorCode> {
         val errorList = arrayListOf<ErrorCode>()
         //Проверяем поле на null
-        if (value != null) {
+        if (!value.isNullOrEmpty()) {
             //Проверяем поле на допустимые значения
             for (i in value) {
                 if (i !in 'А'..'я')
@@ -48,7 +48,7 @@ class EmailValidator : Validator<String>() {
     override fun validate(value: String?): List<ErrorCode> {
         val errorList = arrayListOf<ErrorCode>()
         //Проверяем поле на null
-        if (value != null) {
+        if (!value.isNullOrEmpty()) {
             //Проверяем поле на допустимые значения
             for (i in value) {
                 if (i !in 'A'..'z' && i !in '0'..'9' && i != '.' && i != '@')
@@ -102,7 +102,7 @@ class SNILSValidator : Validator<String>() {
     override fun validate(value: String?): List<ErrorCode> {
         val errorList = arrayListOf<ErrorCode>()
         //Проверяем поле на null
-        if (value != null) {
+        if (!value.isNullOrEmpty()) {
             //Проверяем поле на допустимые значения
             for (i in value) {
                 if (i !in '0'..'9')
@@ -113,7 +113,7 @@ class SNILSValidator : Validator<String>() {
                 errorList.add(ErrorCode.INVALID_SNILS_LENGTH)
             }
             //Проверка на Контрольное число
-            if (value.get(9) != '1' && value.get(10) != '1') {
+            if (value.get(9) != '1' || value.get(10) != '1') {
                 errorList.add(ErrorCode.INVALID_SNILS_OF_CONTROL_NUMBER)
             }
         } else errorList.add(ErrorCode.INVALID_SNILS_VALUE_IS_NULL)
