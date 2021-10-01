@@ -113,10 +113,22 @@ class SNILSValidator : Validator<String>() {
                 errorList.add(ErrorCode.INVALID_SNILS_LENGTH)
             }
             //Проверка на Контрольное число
-            if (value.get(9) != '1' || value.get(10) != '1') {
+            if (value.takeLast(2).toInt() != getCheckNumber(value)) {
                 errorList.add(ErrorCode.INVALID_SNILS_OF_CONTROL_NUMBER)
             }
         } else errorList.add(ErrorCode.INVALID_SNILS_VALUE_IS_NULL)
         return errorList
+    }
+
+    private fun getCheckNumber(value: String): Int {
+        var checkNumber = 0
+        for (i in 0..8) {
+            checkNumber += value[i].toString().toInt() * (9 - i)
+        }
+        if (checkNumber == 100 || checkNumber == 101)
+            checkNumber = 0
+        if (checkNumber > 101)
+            checkNumber %= 101
+        return checkNumber
     }
 }
